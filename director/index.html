@@ -1,13 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="gsdApp">
  <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Ground Systems Director</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/controller.js"></script>
+  <title>Ground Systems Director</title>
  </head>
- <body>
+ <body ng-controller="GroundSystemsCtrl">
   <h1>Ground Systems Director</h1>
   <hr>
+
+  <div ng-repeat="box in boxes">
+    <h2>{{ box.name }}</h2>
+  </div>
+
  </body>
 </html>
