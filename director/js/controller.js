@@ -1,11 +1,27 @@
 var gsdApp = angular.module('gsdApp', []);
 
+var connect = function (uri, $scope) {
+    var WebSocket = window.WebSocket || window.MozWebSocket;
+    var websocket = new WebSocket(uri);
+
+    websocket.onopen = function(evt) {
+        console.log("open");
+    };
+};
 
 gsdApp.controller('GroundSystemsCtrl', function ($scope) {
-    $scope.boxes = [
-        {'name': "LTC"},
-        {'name': "Telemetry Server"},
-        {'name': "Trackmaster"},
-        {'name': "Ground Master Controller"},
+
+    var machines =  [
+        {'name': "LTC", 'connect': "ws://ltc.psas.ground:4000"},
+        {'name': "Telemetry Server", 'connect': "ws://telem.psas.ground:4000"},
+        {'name': "Trackmaster", 'connect': "ws://tm3k.psas.ground:4000"},
+        {'name': "Ground Master Controller", 'connect': "ws://localhost:4000"},
     ];
+
+    $scope.machines = machines;
+
+    for(var i=0; i < machines.length; i++) {
+        connect(machines[i].connect, $scope);
+    }
+
 });
