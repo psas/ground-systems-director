@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from flask import Flask
 from flask_sockets import Sockets
 
