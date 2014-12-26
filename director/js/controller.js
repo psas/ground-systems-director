@@ -1,27 +1,26 @@
-var gsdApp = angular.module('gsdApp', []);
+'use strict';
 
-var connect = function (uri, $scope) {
-    var WebSocket = window.WebSocket || window.MozWebSocket;
-    var websocket = new WebSocket(uri);
-
-    websocket.onopen = function(evt) {
-        console.log("open");
-    };
-};
-
-gsdApp.controller('GroundSystemsCtrl', function ($scope) {
+angular.module("gsdApp.controllers").controller('gsdCtrl', function ($scope, $websocket) {
 
     var machines =  [
-        {'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
-        {'name': "Telemetry Server", 'connect': "ws://telem.psas.ground:8000"},
-        {'name': "Trackmaster", 'connect': "ws://tm3k.psas.ground:8000"},
+        //{'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
+        //{'name': "Telemetry Server", 'connect': "ws://telem.psas.ground:8000"},
+        //{'name': "Trackmaster", 'connect': "ws://tm3k.psas.ground:8000"},
         {'name': "Ground Master Controller", 'connect': "ws://localhost:8000"},
     ];
 
     $scope.machines = machines;
 
-    for(var i=0; i < machines.length; i++) {
-        connect(machines[i].connect, $scope);
-    }
+    var ws = $websocket.$new('ws://localhost:8000');
+    ws.$on('$open', function () {
+        console.log('Oh my gosh, websocket is really open! Fukken awesome!');
+        
+        ws.$emit('list');
+    });
+
+    ws.$on('list', function (data) {
+        console.log('The websocket server has sent the following data:');
+        console.log(data);
+    });
 
 });

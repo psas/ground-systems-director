@@ -5,15 +5,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="/js/angular.min.js"></script>
+  <script src="/js/ng-websocket.js"></script>
+  <script src="/js/app.js"></script>
   <script src="/js/controller.js"></script>
+
   <title>Ground Systems Director</title>
  </head>
- <body ng-controller="GroundSystemsCtrl">
+ <body ng-controller="gsdCtrl">
   <h1>Ground Systems Director</h1>
   <hr>
 
   <div ng-repeat="machine in machines">
     <h2>{{ machine.name }}</h2>
+    <ul>
+        <li ng-repeat="service in machine.services">{{ service.name }}</li>
+    </ul>
   </div>
 
  </body>
