@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("gsdApp.controllers").controller('gsdCtrl', function ($scope, $websocket) {
+angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scope','$websocket', function ($rootScope, $scope, $websocket) {
 
     var machines =  [
         //{'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
@@ -14,13 +14,16 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', function ($scope, $we
     var ws = $websocket.$new('ws://localhost:8000');
     ws.$on('$open', function () {
         console.log('Oh my gosh, websocket is really open! Fukken awesome!');
-        
         ws.$emit('list');
     });
 
     ws.$on('list', function (data) {
         console.log('The websocket server has sent the following data:');
         console.log(data);
+
+        $rootScope.$apply(function() {
+            $scope.machines[0].services = data;
+        });
     });
 
-});
+}]);
