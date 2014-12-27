@@ -21,7 +21,7 @@ angular.module("gsdApp.controllers").filter('connected', function() {
 /**
  * Main Controller
  */
-angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scope','$websocket', function ($rootScope, $scope, $websocket) {
+angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scope','$websocket', '$interval', function ($rootScope, $scope, $websocket, $interval) {
 
     //  Machines we know about, and their locations on the network
     var machines =  [
@@ -58,14 +58,19 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
                 this.connected = true;
             }, this));
 
-            // on connect, send the `list` command
+            // HEARTBEAT
             this.ws.$emit('heartbeat');
+            this.heartbeat = $interval(proxy(function () {
+                this.ws.$emit('heartbeat');
+            }, this), 1000);
         }, machine));
 
         // CLOSE
         machine.ws.$on('$close', proxy(function () {
             console.log(this.name+' disconnect');
 
+            // Kill heartbeat if we loose connection.
+            $interval.cancel(this.heartbeat);
             $rootScope.$apply(proxy(function() {
                 this.connected = false;
             }, this));
