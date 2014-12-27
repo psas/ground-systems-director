@@ -15,10 +15,19 @@
   <h1>Ground Systems Director</h1>
   <hr>
 
-  <div ng-repeat="machine in machines">
-    <h2>{{ machine.name }}</h2>
-    <ul>
-        <li ng-repeat="service in machine.services">{{ service.name }}</li>
+  <div class="machine" ng-class="{'on': machine.connected, 'off': !machine.connected }" ng-repeat="machine in machines">
+    <h2>{{ machine.name }} <span class="connection-url">({{ machine.connect}})</span> <button name="reboot">reboot</button></h2>
+    <h3><span class="status">Status: {{ machine.connected | connected }}</span></h3>
+    <p>services: </p>
+    <ul class="services">
+        <li ng-repeat="service in machine.services"><span>{{ service.name }}</span>
+            <ul class="controls">
+              <li><button name="start">start</button></li>
+              <li><button name="stop">stop</button></li>
+              <li><button name="restart">restart</button></li>
+            </ul>
+        </li>
+        <li ng-hide="machine.services.length">Connecting...</li>
     </ul>
   </div>
 

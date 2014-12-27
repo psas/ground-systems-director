@@ -6,12 +6,21 @@ var proxy = function(fn, context) {
   };
 };
 
+angular.module("gsdApp.controllers").filter('connected', function() {
+    return function(text, length, end) {
+        if (text) {
+            return 'Connected';
+        }
+        return 'Connecting...';
+    }
+});
+
 
 angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scope','$websocket', function ($rootScope, $scope, $websocket) {
 
     var machines =  [
         //{'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
-        //{'name': "Telemetry Server", 'connect': "ws://telem.psas.ground:8000"},
+        {'name': "Telemetry Server", 'connect': "ws://telem.psas.ground:8000"},
         {'name': "Trackmaster", 'connect': "ws://localhost:5600"},
         {'name': "Ground Master Controller", 'connect': "ws://localhost:8000"},
     ];
@@ -21,9 +30,15 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
 
     for (var i=0; i<machines.length; i++) {
         var machine = $scope.machines[i];
+        machine.connected = false;
         machine.ws = $websocket.$new(machine.connect);
         machine.ws.$on('$open', proxy(function () {
             console.log('connect to '+this.name);
+
+            $rootScope.$apply(proxy(function() {
+                this.connected = true;
+            }, this));
+
             this.ws.$emit('list');
         }, machine));
 
