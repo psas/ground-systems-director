@@ -1,0 +1,9 @@
+[
+  {
+    "service": "Flight Computer",
+    "type": "c",
+    "path": "/home/natronics/PSAS/FlightComputer/av3-fc/",
+    "run": "fc",
+    "arglist": []
+  }
+]

@@ -59,7 +59,7 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
             }, this));
 
             // on connect, send the `list` command
-            this.ws.$emit('list');
+            this.ws.$emit('heartbeat');
         }, machine));
 
         // CLOSE
@@ -97,11 +97,12 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
         }, machine);
 
         /* Command Handlers */
-        // LIST
-        machine.ws.$on('list', proxy(function (data) {
+        // HEARTBEAT
+        machine.ws.$on('heartbeat', proxy(function (data) {
             console.log('got list from '+this.name);
+            console.log(data);
             $rootScope.$apply(proxy(function() {
-                this.services = data;
+                this.services = data.services;
             }, this));
         }, machine));
     }

@@ -5,6 +5,8 @@ import json
 app = Flask(__name__)
 sockets = Sockets(app)
 
+services = []
+
 
 @sockets.route('/')
 def echo_socket(ws):
@@ -17,7 +19,19 @@ def echo_socket(ws):
 
         print "incoming!: ", message
 
-        if message.get("event", "") == "list":
-            print "Got List"
-            ws.send(json.dumps({"event": "list", "data": [{"name": "LTC"},{"name": "Mission Time"}]}))
+        if message.get("event", "") == "heartbeat":
+            data = {'cpu': 0, 'ram': 0}
+            s = []
+            for service in services:
+                s.append({'name': service['service'], 'pid': 0})
+            data['services'] = s
+            ws.send(json.dumps({'event': "heartbeat", 'data': data}))
 
+
+def run(config, service_config):
+    global services
+    app.config.from_pyfile(config)
+    with open(service_config, 'r') as fin:
+        services = json.loads(fin.read())
+    print services
+    return app
