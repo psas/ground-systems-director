@@ -78,6 +78,24 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
             this.ws.$emit('reboot');
         }, machine);
 
+        // Start
+        machine.start = proxy(function(name) {
+            console.log(this.name+" start ("+name+")");
+            this.ws.$emit('start', name);
+        }, machine);
+
+        // Stop
+        machine.stop = proxy(function(name) {
+            console.log(this.name+" stop ("+name+")");
+            this.ws.$emit('stop', name);
+        }, machine);
+
+        // Restart
+        machine.restart = proxy(function(name) {
+            console.log(this.name+" restart ("+name+")");
+            this.ws.$emit('restart', name);
+        }, machine);
+
         /* Command Handlers */
         // LIST
         machine.ws.$on('list', proxy(function (data) {

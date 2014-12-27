@@ -19,5 +19,5 @@ def echo_socket(ws):
 
         if message.get("event", "") == "list":
             print "Got List"
-            ws.send(json.dumps({"event": "list", "data": [{"name": "LTC"}]}))
+            ws.send(json.dumps({"event": "list", "data": [{"name": "LTC"},{"name": "Mission Time"}]}))
 

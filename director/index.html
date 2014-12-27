@@ -22,9 +22,9 @@
     <ul class="services">
         <li ng-repeat="service in machine.services"><span>{{ service.name }}</span>
             <ul class="controls">
-              <li><button name="start">start</button></li>
-              <li><button name="stop">stop</button></li>
-              <li><button name="restart">restart</button></li>
+              <li><button name="start" ng-click="machine.start(service.name)">start</button></li>
+              <li><button name="stop" ng-click="machine.stop(service.name)">stop</button></li>
+              <li><button name="restart" ng-click="machine.restart(service.name)">restart</button></li>
             </ul>
         </li>
         <li ng-hide="machine.services.length">Connecting...</li>
