@@ -10,6 +10,7 @@
  <body ng-controller="gsdCtrl">
   <h1>Ground Systems Director</h1>
   <hr>
+<div id="div_g" style="width:30%; height:100px;"></div>
 
   <div class="machine" ng-class="{'on': machine.connected, 'off': !machine.connected }" ng-repeat="machine in machines">
     <h2>{{ machine.name }} <span class="connection-url">({{ machine.connect}})</span> <button name="reboot" ng-click="machine.reboot()">reboot</button></h2>
@@ -27,6 +28,7 @@
     </ul>
   </div>
 
+  <script src="/js/dygraph-combined.js"></script>
   <script src="/js/angular.min.js"></script>
   <script src="/js/ng-websocket.js"></script>
   <script src="/js/app.js"></script>

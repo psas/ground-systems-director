@@ -34,6 +34,38 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
     // place initial list into the scope
     $scope.machines = machines;
 
+    var data = [];
+    var t = new Date();
+    for (var i = 300; i >= 0; i--) {
+        var x = new Date(t.getTime() - i * 1000);
+        data.push([x, 100.0, null]);
+    }
+    var g = new Dygraph(document.getElementById("div_g"), data, {
+        drawPoints: false,
+        showRoller: false,
+        fillGraph: true,
+        includeZero: true,
+        interactionModel: {},
+        ylabel: "CPU [%]",
+        valueRange: [0.0, 100.1],
+        labels: ['Time', 'disconnected', 'CPU'],
+        axes: {
+            'x': {
+                drawGrid: true
+            }
+        },
+        series : {
+            'disconnected': {
+                color: '#cccccc',
+                strokeWidth: 0
+            },
+            'CPU': {
+                color: '#0000ff',
+                strokeWidth: 1
+            }
+        }
+    });
+
     /**
      * For each machine in the list, we will set up the websocket, events, and
      * callbacks to run the show.
@@ -48,6 +80,8 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
 
         // Init websocket!
         machine.ws = $websocket.$new(machine.connect);
+        machine.ws.$$config.reconnect = false;
+        
 
         /* WEBSOCKET EVENTS: */
         // OPEN
