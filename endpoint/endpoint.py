@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sockets import Sockets
+import psutil
 import json
 
 app = Flask(__name__)
@@ -20,7 +21,8 @@ def echo_socket(ws):
         print "incoming!: ", message
 
         if message.get("event", "") == "heartbeat":
-            data = {'cpu': 0, 'ram': 0}
+            cpu = psutil.cpu_times_percent(interval=1)
+            data = {'cpu': cpu.user + cpu.system, 'ram': 0}
             s = []
             for service in services:
                 s.append({'name': service['service'], 'pid': 0})

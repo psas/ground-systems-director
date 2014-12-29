@@ -20,7 +20,7 @@ angular.module("gsdApp.controllers").filter('connected', function() {
 /* "Empty" data to push into the charts on pageload. 5 minutes of null */
 var default_disconnect_data = [];
 var t = new Date();
-for (var i = 30; i > 0; i--) {
+for (var i = 30; i >= 0; i--) {
     var x = new Date(t.getTime() - i * 10000);
     default_disconnect_data.push([x, 100.0, null]);
 }
@@ -168,7 +168,12 @@ directive('chartCpu', function($compile) {
         scope.$watch('machine.cpu.length', function(newValue, oldValue, scope) {
             //console.log("watch:", oldValue, newValue, scope);
             //console.log(cpu_chart);
-            scope.machine.cpu_chart.updateOptions( { 'file': scope.machine.cpu } );
+            t = new Date();
+
+            scope.machine.cpu_chart.updateOptions( {
+                dateWindow: [ t - 300000, t ],
+                'file': scope.machine.cpu
+            });
         });
     }
     return {
