@@ -17,10 +17,10 @@ angular.module("gsdApp.controllers").filter('connected', function() {
     }
 });
 
-/* "Empty" data to push into the charts on pageload. */
+/* "Empty" data to push into the charts on pageload. 5 minutes of null */
 var default_disconnect_data = [];
 var t = new Date();
-for (var i = 3; i >= 0; i--) {
+for (var i = 30; i > 0; i--) {
     var x = new Date(t.getTime() - i * 10000);
     default_disconnect_data.push([x, 100.0, null]);
 }
@@ -34,9 +34,18 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
     //  Machines we know about, and their locations on the network
     var machines =  [
         //{'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
-        {'name': "Telemetry Server", 'connect': "ws://telem.psas.ground:8000"},
-        {'name': "Trackmaster", 'connect': "ws://localhost:5600"},
-        {'name': "Ground Master Controller", 'connect': "ws://localhost:8000"},
+        {'name': "Telemetry Server",
+         'connect': "ws://telem.psas.ground:8000",
+         'cpu': default_disconnect_data.slice(0)
+        },
+        {'name': "Trackmaster",
+         'connect': "ws://localhost:5600",
+         'cpu': default_disconnect_data.slice(0)
+        },
+        {'name': "Ground Master Controller",
+         'connect': "ws://localhost:8000",
+         'cpu': default_disconnect_data.slice(0)
+        }
     ];
 
     // place initial list into the scope
@@ -123,13 +132,15 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
             console.log(data);
             $rootScope.$apply(proxy(function() {
                 this.services = data.services;
+                var t = new Date();
+                this.cpu.push([t, null, data.cpu]);
             }, this));
         }, machine));
     }
 }]).
 directive('chartCpu', function($compile) {
     function link (scope, element, attrs) {
-        var cpu_chart = new Dygraph(element[0], default_disconnect_data, {
+        scope.machine.cpu_chart = new Dygraph(element[0], scope.machine.cpu, {
             drawPoints: false,
             showRoller: false,
             fillGraph: true,
@@ -153,6 +164,11 @@ directive('chartCpu', function($compile) {
                     strokeWidth: 1
                 }
             }
+        });
+        scope.$watch('machine.cpu.length', function(newValue, oldValue, scope) {
+            //console.log("watch:", oldValue, newValue, scope);
+            //console.log(cpu_chart);
+            scope.machine.cpu_chart.updateOptions( { 'file': scope.machine.cpu } );
         });
     }
     return {
