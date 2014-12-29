@@ -1,0 +1,54 @@
+// Depends on bootstrap:
+@import "bootstrap.less";
+
+// import variables
+@import "vendor/flat-ui/less/variables";
+
+
+/* Override defaults! */
+@text-color:    #444;
+@font-size-base:  16px;
+@font-size-h1:  floor((@font-size-base * 2.2));
+@font-size-h2:  ceil((@font-size-base * 1.6));
+@font-size-h3:  ceil((@font-size-base * 1.1));
+
+@icon-font-path: "/style/vendor/flat-ui/fonts/glyphicons/";
+
+
+
+//Continue import Flat-UI:
+
+// Utility mixins for greater good
+@import "vendor/flat-ui/less/mixins";
+
+//@import "vendor/flat-ui/less/modules/local-fonts";
+@import "vendor/flat-ui/less/modules/glyphicons";
+
+// Modules
+@import "vendor/flat-ui/less/modules/scaffolding";
+@import "vendor/flat-ui/less/modules/type";
+@import "vendor/flat-ui/less/modules/code";
+@import "vendor/flat-ui/less/modules/thumbnails";
+@import "vendor/flat-ui/less/modules/buttons";
+@import "vendor/flat-ui/less/modules/button-groups";
+@import "vendor/flat-ui/less/modules/forms";
+@import "vendor/flat-ui/less/modules/input-groups";
+@import "vendor/flat-ui/less/modules/radiocheck";
+@import "vendor/flat-ui/less/modules/tagsinput";
+//@import "vendor/flat-ui/less/modules/typeahead";
+@import "vendor/flat-ui/less/modules/progress-bars";
+@import "vendor/flat-ui/less/modules/slider";
+//@import "vendor/flat-ui/less/modules/pager";
+//@import "vendor/flat-ui/less/modules/pagination";
+@import "vendor/flat-ui/less/modules/tooltip";
+//@import "vendor/flat-ui/less/modules/dropdowns";
+@import "vendor/flat-ui/less/modules/select";
+@import "vendor/flat-ui/less/modules/tiles";
+@import "vendor/flat-ui/less/modules/navbar";
+@import "vendor/flat-ui/less/modules/switch";
+//@import "vendor/flat-ui/less/modules/share";
+//@import "vendor/flat-ui/less/modules/video";
+@import "vendor/flat-ui/less/modules/todo-list";
+
+// Spaces
+@import "vendor/flat-ui/less/spaces";

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/style/style.css">
 
   <title>Ground Systems Director</title>
  </head>
@@ -11,9 +12,8 @@
   <h1>Ground Systems Director</h1>
   <hr>
   <div class="machine" ng-class="{'on': machine.connected, 'off': !machine.connected }" ng-repeat="machine in machines">
-    <h2>{{ machine.name }} <span class="connection-url">({{ machine.connect}})</span> <button name="reboot" ng-click="machine.reboot()">reboot</button></h2>
-    <h3><span class="status">Status: {{ machine.connected | connected }}</span><div chart-cpu style="width: 30%; height: 100px;"></div><div chart-ram style="width: 30%; height: 100px;"></div></h3>
-    <p>services: </p>
+    <h2><span ng-class="{'fui-check-circle': machine.connected, 'fui-cross-circle': !machine.connected }" ></span> {{ machine.name }} <span class="connection-url">({{ machine.connect}})</span> <button class="danger" name="reboot" ng-click="machine.reboot()">reboot</button></h2>
+    <h3><span class="status">Status: {{ machine.connected | connected }}</span><div chart-cpu></div><div chart-ram></div></h3>
     <ul class="services">
         <li ng-repeat="service in machine.services"><span>{{ service.name }}</span>
             <ul class="controls">

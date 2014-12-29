@@ -149,6 +149,7 @@ directive('chartCpu', function($compile) {
             showRoller: false,
             fillGraph: true,
             includeZero: true,
+            axisLabelFontSize: 9,
             gridLineColor: '#444444',
             gridLinePattern: [2,7],
             interactionModel: {},
@@ -158,6 +159,9 @@ directive('chartCpu', function($compile) {
             axes: {
                 'x': {
                     drawGrid: true
+                },
+                'y': {
+                    pixelsPerLabel: 10
                 }
             },
             series : {
@@ -166,7 +170,7 @@ directive('chartCpu', function($compile) {
                     strokeWidth: 0
                 },
                 'CPU': {
-                    color: '#0000ff',
+                    color: '#2980B9',
                     strokeWidth: 1
                 }
             }
@@ -190,6 +194,7 @@ directive('chartRam', function($compile) {
             showRoller: false,
             fillGraph: true,
             includeZero: true,
+            axisLabelFontSize: 9,
             gridLineColor: '#444444',
             gridLinePattern: [2,7],
             interactionModel: {},
@@ -199,6 +204,9 @@ directive('chartRam', function($compile) {
             axes: {
                 'x': {
                     drawGrid: true
+                },
+                'y': {
+                    pixelsPerLabel: 10
                 }
             },
             series : {
@@ -207,7 +215,7 @@ directive('chartRam', function($compile) {
                     strokeWidth: 0
                 },
                 'RAM': {
-                    color: '#00ff00',
+                    color: '#27AE60',
                     strokeWidth: 1
                 }
             }

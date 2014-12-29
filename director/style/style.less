@@ -1,0 +1,52 @@
+@import "flat-ui.less";
+
+hr { display: none; }
+
+// Buttons
+button {
+    .btn();
+    .btn-block();
+}
+
+button.danger {
+    .btn-lg();
+    .btn-danger();
+    .pull-right();
+    margin-top: -22px;
+}
+
+// Major layout
+.machine {
+    .container-fluid();
+    border-bottom: 3px solid #bbb;
+}
+.machine.off { background: #eee; }
+.fui-cross-circle { color: @alizarin; }
+.fui-check-circle { color: @emerald; }
+
+
+.connection-url {
+    font-size: 0.6em;
+    color: #666;
+}
+
+h2 { margin-bottom: 8px; }
+h3 { .row(); margin-top: 0; margin-bottom: 0; }
+h3>span.status { .make-md-column(3); height: 75px; padding-top: 5px; }
+h3>div { .make-md-column(4); height: 75px; font-weight: normal;}
+
+.services {
+    margin-top: 2px;
+    border-top: 1px solid #ddd;
+    list-style: none;
+}
+
+.services>li {
+    .row();
+    border-bottom: 1px dotted #ccc;
+}
+
+.services>li span { .make-md-column(2); }
+.services>li { padding: 4px 0; }
+.services>li .controls { list-style: none; margin: 0; padding: 0; }
+.services>li .controls button { .make-md-column(1); .btn-sm(); margin-left: 10px; }
