@@ -22,7 +22,8 @@ def echo_socket(ws):
 
         if message.get("event", "") == "heartbeat":
             cpu = psutil.cpu_times_percent(interval=1)
-            data = {'cpu': cpu.user + cpu.system, 'ram': 0}
+            ram = psutil.virtual_memory().percent
+            data = {'cpu': cpu.user + cpu.system, 'ram': ram}
             s = []
             for service in services:
                 s.append({'name': service['service'], 'pid': 0})

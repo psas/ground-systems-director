@@ -36,15 +36,18 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
         //{'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
         {'name': "Telemetry Server",
          'connect': "ws://telem.psas.ground:8000",
-         'cpu': default_disconnect_data.slice(0)
+         'cpu': default_disconnect_data.slice(0),
+         'ram': default_disconnect_data.slice(0)
         },
         {'name': "Trackmaster",
          'connect': "ws://localhost:5600",
-         'cpu': default_disconnect_data.slice(0)
+         'cpu': default_disconnect_data.slice(0),
+         'ram': default_disconnect_data.slice(0)
         },
         {'name': "Ground Master Controller",
          'connect': "ws://localhost:8000",
-         'cpu': default_disconnect_data.slice(0)
+         'cpu': default_disconnect_data.slice(0),
+         'ram': default_disconnect_data.slice(0)
         }
     ];
 
@@ -134,6 +137,7 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
                 this.services = data.services;
                 var t = new Date();
                 this.cpu.push([t, null, data.cpu]);
+                this.ram.push([t, null, data.ram]);
             }, this));
         }, machine));
     }
@@ -145,6 +149,8 @@ directive('chartCpu', function($compile) {
             showRoller: false,
             fillGraph: true,
             includeZero: true,
+            gridLineColor: '#444444',
+            gridLinePattern: [2,7],
             interactionModel: {},
             ylabel: "CPU [%]",
             valueRange: [0.0, 100.1],
@@ -166,13 +172,51 @@ directive('chartCpu', function($compile) {
             }
         });
         scope.$watch('machine.cpu.length', function(newValue, oldValue, scope) {
-            //console.log("watch:", oldValue, newValue, scope);
-            //console.log(cpu_chart);
             t = new Date();
-
             scope.machine.cpu_chart.updateOptions( {
                 dateWindow: [ t - 300000, t ],
                 'file': scope.machine.cpu
+            });
+        });
+    }
+    return {
+      link: link
+    }
+}).
+directive('chartRam', function($compile) {
+    function link (scope, element, attrs) {
+        scope.machine.ram_chart = new Dygraph(element[0], scope.machine.ram, {
+            drawPoints: false,
+            showRoller: false,
+            fillGraph: true,
+            includeZero: true,
+            gridLineColor: '#444444',
+            gridLinePattern: [2,7],
+            interactionModel: {},
+            ylabel: "RAM [%]",
+            valueRange: [0.0, 100.1],
+            labels: ['Time', 'disconnected', 'RAM'],
+            axes: {
+                'x': {
+                    drawGrid: true
+                }
+            },
+            series : {
+                'disconnected': {
+                    color: '#cccccc',
+                    strokeWidth: 0
+                },
+                'RAM': {
+                    color: '#00ff00',
+                    strokeWidth: 1
+                }
+            }
+        });
+        scope.$watch('machine.ram.length', function(newValue, oldValue, scope) {
+            t = new Date();
+            scope.machine.ram_chart.updateOptions( {
+                dateWindow: [ t - 300000, t ],
+                'file': scope.machine.ram
             });
         });
     }
