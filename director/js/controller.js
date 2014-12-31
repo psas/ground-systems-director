@@ -33,7 +33,6 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
 
     //  Machines we know about, and their locations on the network
     var machines =  [
-        //{'name': "LTC", 'connect': "ws://ltc.psas.ground:8000"},
         {'name': "Telemetry Server",
          'connect': "ws://telem.psas.ground:8000",
          'cpu': default_disconnect_data.slice(0),
@@ -69,7 +68,7 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
 
         // Init websocket!
         machine.ws = $websocket.$new(machine.connect);
-        machine.ws.$$config.reconnect = false;
+        machine.ws.$$config.reconnect = true;
         
 
         /* WEBSOCKET EVENTS: */
@@ -90,13 +89,14 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
 
         // CLOSE
         machine.ws.$on('$close', proxy(function () {
-            console.log(this.name+' disconnect');
-
             // Kill heartbeat if we loose connection.
             $interval.cancel(this.heartbeat);
-            $rootScope.$apply(proxy(function() {
-                this.connected = false;
-            }, this));
+            if (this.connected) {
+                console.log(this.name+" disconnected!");
+                $rootScope.$apply(proxy(function() {
+                    this.connected = false;
+                }, this));
+            }
         }, machine));
 
 

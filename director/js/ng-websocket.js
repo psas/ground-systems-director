@@ -148,7 +148,7 @@
             me.$$ws.onopen = function () {
                 // Clear the reconnect task if exists
                 if (me.$$reconnectTask) {
-                    clearInterval(me.$$reconnectTask);
+                    clearTimeout(me.$$reconnectTask);
                     delete me.$$reconnectTask;
                 }
 
@@ -166,7 +166,7 @@
             me.$$ws.onclose = function () {
                 // Activate the reconnect task
                 if (me.$$config.reconnect) {
-                    me.$$reconnectTask = setInterval(function () {
+                    me.$$reconnectTask = setTimeout(function () {
                         if (me.$status() === me.$CLOSED) me.$open();
                     }, me.$$config.reconnectInterval);
                 }
@@ -243,7 +243,7 @@
             if (me.$status() !== me.$CLOSED) me.$$ws.close();
 
             if (me.$$reconnectTask) {
-                clearInterval(me.$$reconnectTask);
+                clearTimeout(me.$$reconnectTask);
                 delete me.$$reconnectTask;
             }
 
