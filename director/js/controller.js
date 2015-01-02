@@ -161,7 +161,7 @@ directive('chartCpu', function($compile) {
                     drawGrid: true
                 },
                 'y': {
-                    pixelsPerLabel: 10
+                    pixelsPerLabel: 20
                 }
             },
             series : {
@@ -206,7 +206,7 @@ directive('chartRam', function($compile) {
                     drawGrid: true
                 },
                 'y': {
-                    pixelsPerLabel: 10
+                    pixelsPerLabel: 20
                 }
             },
             series : {
