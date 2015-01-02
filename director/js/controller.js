@@ -131,8 +131,6 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
         /* Response Handlers */
         // HEARTBEAT
         machine.ws.$on('heartbeat', proxy(function (data) {
-            console.log('got list from '+this.name);
-            console.log(data);
             $rootScope.$apply(proxy(function() {
                 this.services = data.services;
                 var t = new Date();

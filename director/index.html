@@ -10,7 +10,7 @@
  </head>
  <body ng-controller="gsdCtrl">
   <div id="header">
-    <h1>Ground Systems Director</h1>
+    <h1><img src="/psas.svg" alt="PSAS" style="height:35px;width:35px;"> Ground Systems Director</h1>
   </div>
   <div class="machine" ng-class="{'on': machine.connected, 'off': !machine.connected }" ng-repeat="machine in machines">
     <h2><span ng-class="{'fui-check-circle': machine.connected, 'fui-cross-circle': !machine.connected }" ></span> {{ machine.name }} <span class="connection-url">({{ machine.connect}})</span> <button class="danger" name="reboot" ng-click="machine.reboot()">reboot</button></h2>
@@ -19,7 +19,8 @@
       <div><div chart-ram></div></div>
     </h3>
     <ul class="services">
-        <li ng-repeat="service in machine.services"><span>{{ service.name }}</span>
+        <li ng-repeat="service in machine.services">
+           <span><span class="fui-cross-circle"> </span> {{ service.name }}</span>
             <ul class="controls">
               <li><button name="start" ng-click="machine.start(service.name)">start</button></li>
               <li><button name="stop" ng-click="machine.stop(service.name)">stop</button></li>
