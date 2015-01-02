@@ -13,7 +13,11 @@
     <h1><img src="/psas.svg" alt="PSAS" style="height:35px;width:35px;"> Ground Systems Director</h1>
   </div>
   <div class="machine" ng-class="{'on': machine.connected, 'off': !machine.connected }" ng-repeat="machine in machines">
-    <h2><span ng-class="{'fui-check-circle': machine.connected, 'fui-cross-circle': !machine.connected }" ></span> {{ machine.name }} <span class="connection-url">({{ machine.connect}})</span> <button class="danger" name="reboot" ng-click="machine.reboot()">reboot</button></h2>
+    <h2>
+      <span ng-class="{'fui-check-circle': machine.connected, 'fui-cross-circle': !machine.connected }" ></span> {{ machine.name }}
+      <span class="connection-url">({{ machine.connect}})</span>
+      <button class="danger" ng-disabled="!machine.connected" name="reboot" ng-click="machine.reboot()">reboot</button>
+    </h2>
     <h3>
       <div><div chart-cpu></div></div>
       <div><div chart-ram></div></div>
@@ -22,9 +26,9 @@
         <li ng-repeat="service in machine.services">
            <span><span class="fui-cross-circle"> </span> {{ service.name }}</span>
             <ul class="controls">
-              <li><button name="start" ng-click="machine.start(service.name)">start</button></li>
-              <li><button name="stop" ng-click="machine.stop(service.name)">stop</button></li>
-              <li><button name="restart" ng-click="machine.restart(service.name)">restart</button></li>
+              <li><button ng-disabled="!machine.connected" name="start" ng-click="machine.start(service.name)">start</button></li>
+              <li><button ng-disabled="!machine.connected" name="stop" ng-click="machine.stop(service.name)">stop</button></li>
+              <li><button ng-disabled="!machine.connected" name="restart" ng-click="machine.restart(service.name)">restart</button></li>
             </ul>
         </li>
         <li ng-hide="machine.services.length">Connecting...</li>
