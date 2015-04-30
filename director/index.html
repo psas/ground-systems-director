@@ -25,11 +25,6 @@
     <ul class="services">
         <li ng-repeat="service in machine.services">
            <span><span class="fui-cross-circle"> </span> {{ service.name }}</span>
-            <ul class="controls">
-              <li><button ng-disabled="!machine.connected" name="start" ng-click="machine.start(service.name)">start</button></li>
-              <li><button ng-disabled="!machine.connected" name="stop" ng-click="machine.stop(service.name)">stop</button></li>
-              <li><button ng-disabled="!machine.connected" name="restart" ng-click="machine.restart(service.name)">restart</button></li>
-            </ul>
         </li>
         <li ng-hide="machine.services.length">Connecting...</li>
     </ul>
