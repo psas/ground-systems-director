@@ -33,18 +33,8 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
 
     //  Machines we know about, and their locations on the network
     var machines =  [
-        {'name': "Telemetry Server",
-         'connect': "ws://telem.psas.ground:8000",
-         'cpu': default_disconnect_data.slice(0),
-         'ram': default_disconnect_data.slice(0)
-        },
-        {'name': "Trackmaster",
-         'connect': "ws://localhost:5600",
-         'cpu': default_disconnect_data.slice(0),
-         'ram': default_disconnect_data.slice(0)
-        },
         {'name': "Ground Master Controller",
-         'connect': "ws://localhost:8000",
+         'connect': "ws://localhost:8675",
          'cpu': default_disconnect_data.slice(0),
          'ram': default_disconnect_data.slice(0)
         }
@@ -69,7 +59,7 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
         // Init websocket!
         machine.ws = $websocket.$new(machine.connect);
         machine.ws.$$config.reconnect = true;
-        
+
 
         /* WEBSOCKET EVENTS: */
         // OPEN
@@ -79,18 +69,10 @@ angular.module("gsdApp.controllers").controller('gsdCtrl', ['$rootScope', '$scop
             $rootScope.$apply(proxy(function() {
                 this.connected = true;
             }, this));
-
-            // HEARTBEAT
-            this.ws.$emit('heartbeat');
-            this.heartbeat = $interval(proxy(function () {
-                this.ws.$emit('heartbeat');
-            }, this), 1000);
         }, machine));
 
         // CLOSE
         machine.ws.$on('$close', proxy(function () {
-            // Kill heartbeat if we loose connection.
-            $interval.cancel(this.heartbeat);
             if (this.connected) {
                 console.log(this.name+" disconnected!");
                 $rootScope.$apply(proxy(function() {
