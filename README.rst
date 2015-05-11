@@ -8,6 +8,9 @@ PSAS Service Manager
 .. image:: https://img.shields.io/pypi/v/psas_services.svg
         :target: https://pypi.python.org/pypi/psas_services
 
+.. image:: https://readthedocs.org/projects/psas-services/badge/?version=latest
+        :target: https://readthedocs.org/projects/psas-services/?badge=latest
+        :alt: Documentation Status
 
 A network service manager for the PSAS launch infrastructure.
 
