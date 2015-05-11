@@ -1,22 +1,25 @@
-=======================
-Ground Systems Director
-=======================
+===============================
+PSAS Service Manager
+===============================
 
-The Ground Systems Director (**GSD**) is a protocol and a screen to coördinate
-running all the various services used in carrying out a launch in the desert.
+.. image:: https://img.shields.io/travis/psas/ground-systems-director.svg
+        :target: https://travis-ci.org/psas/ground-systems-director
+
+.. image:: https://img.shields.io/pypi/v/psas_services.svg
+        :target: https://pypi.python.org/pypi/psas_services
 
 
-Server End And Front End
-========================
+A network service manager for the PSAS launch infrastructure.
 
-There are two halves of the GSD service, a front end web page that is the
-control, and a back end which runs on each and every machine that might be
-running a Ground Systems Service.
 
-The front end becomes a single place to start, stop, and monitor any PSAS
-service on the ground network.
+* Documentation: https://psas_services.readthedocs.org.
 
-The back end is a simple endpoint websocket that returns data about the services
-on the machine it's running on as a heartbeat.
+Features
+--------
 
-Configuration is done with yaml files.
+* TODO
+
+Requirements
+------------
+
+The PSAS Service manager uses the asyncio module that is new in Python 3.4. Only Python 3.4 and greater are supported.
