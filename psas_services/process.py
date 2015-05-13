@@ -3,12 +3,14 @@ import asyncio
 import psutil
 
 
-class Performance(object):
+def monitor():
+    """Monitor the system this machine is running on.
 
-    def __init__(self):
-        pass
+    :returns CPU and RAM usage persentage in an object:
 
-    def measure(self):
-        cpu = psutil.cpu_times_percent(interval=1)
-        ram = psutil.virtual_memory().percent
-        return {'cpu': cpu.user + cpu.system, 'ram': ram}
+    """
+
+    cpu = psutil.cpu_times_percent(interval=0.0)
+    ram = psutil.virtual_memory().percent
+
+    return {'cpu': cpu.user + cpu.system, 'ram': ram}
